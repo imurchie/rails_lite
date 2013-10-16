@@ -1,21 +1,32 @@
 class Route
-  attr_reader :pattern, :http_method, :controller_class, :action_name
+  attr_reader :pattern, :http_method, :controller_class, :action_name, :route_params
 
   def initialize(pattern, http_method, controller_class, action_name)
     @pattern          = pattern
     @http_method      = http_method
     @controller_class = controller_class
     @action_name      = action_name
+
+    @route_params = {}
   end
 
   def matches?(req)
     request_method = req.request_method.downcase.to_sym
 
-    request_method == http_method && pattern =~ req.path
+    if request_method == http_method && md = pattern.match(req.path)
+
+      pattern.named_captures.each do |key, value|
+        route_params[key.to_sym] = md[value.first]
+      end
+puts "HERE! #{route_params}"
+      return true
+    end
+
+    false
   end
 
   def run(req, res)
-    controller = controller_class.new(req, res)
+    controller = controller_class.new(req, res, route_params)
     controller.invoke_action(action_name)
   end
 end
