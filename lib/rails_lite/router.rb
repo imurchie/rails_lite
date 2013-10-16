@@ -18,7 +18,7 @@ class Route
       pattern.named_captures.each do |key, value|
         route_params[key.to_sym] = md[value.first]
       end
-puts "HERE! #{route_params}"
+
       return true
     end
 

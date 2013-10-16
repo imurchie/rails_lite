@@ -44,7 +44,7 @@ class ControllerBase
   end
 
   def render(template_name)
-    filename = "views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
+    filename = get_view_path(template_name)
     template = ERB.new(File.read(filename))
 
     render_content(template.result(binding), "text/html")
@@ -59,4 +59,9 @@ class ControllerBase
 
   private
     attr_reader :request, :response
+
+    def get_view_path(template_name)
+      bare_class = self.class.to_s.gsub("Controller", "")
+      "app/views/#{bare_class.underscore}/#{template_name}.html.erb"
+    end
 end
