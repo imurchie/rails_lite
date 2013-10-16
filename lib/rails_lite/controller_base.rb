@@ -10,6 +10,8 @@ class ControllerBase
     @response     = res
     @route_params = route_params
 
+    @params = Params.new(req, route_params)
+
     @response_built = false
   end
 
