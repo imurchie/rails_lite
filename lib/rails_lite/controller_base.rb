@@ -14,6 +14,7 @@ class ControllerBase
   end
 
   def session
+    @session ||= Session.new(request)
   end
 
   def already_rendered?
@@ -27,6 +28,7 @@ class ControllerBase
 
     response.status = 302
     response["Location"] = url
+    session.store_session(response)
   end
 
   def render_content(body, content_type)
@@ -36,6 +38,7 @@ class ControllerBase
 
     response.body = body
     response.content_type = content_type
+    session.store_session(response)
   end
 
   def render(template_name)
@@ -50,5 +53,5 @@ class ControllerBase
 
 
   private
-    attr_reader :response
+    attr_reader :request, :response
 end
