@@ -11,11 +11,15 @@ trap('INT') { server.shutdown }
 
 class MyController < ControllerBase
   def go
+    # in order to test passing of variables into the erb template
+    @name = "Isaac"
+
+
     # render_content("hello world!", "text/html")
-    redirect_to("http://google.com")
+    # redirect_to("http://google.com")
 
     # after you have template rendering, uncomment:
-#    render :show
+    # render :show
 
     # after you have sessions going, uncomment:
 #    session["count"] ||= 0
