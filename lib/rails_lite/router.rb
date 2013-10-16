@@ -2,7 +2,7 @@ class Route
   attr_reader :pattern, :http_method, :controller_class, :action_name, :route_params
 
   def initialize(pattern, http_method, controller_class, action_name)
-    @pattern          = pattern
+    @pattern          = parse_pattern(pattern)
     @http_method      = http_method
     @controller_class = controller_class
     @action_name      = action_name
@@ -29,6 +29,23 @@ class Route
     controller = controller_class.new(req, res, route_params)
     controller.invoke_action(action_name)
   end
+
+
+  private
+    # parse Rails-style route parameters into the Regexp used here
+    def parse_pattern(pattern)
+      return pattern if pattern.is_a?(Regexp)
+
+      pattern = pattern.split(/\//).map do |part|
+        if /^:/ =~ part
+          "(?<#{part.sub(":", "")}>\\d+)"
+        else
+          part
+        end
+      end.join("/")
+
+      Regexp.new("^#{pattern}$")
+    end
 end
 
 class Router

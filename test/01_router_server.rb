@@ -19,14 +19,16 @@ server.mount_proc '/' do |req, res|
   router = Router.new
   router.draw do
     # resources :user, :only => [:new, :create, :show]
-    get Regexp.new("^/users/new$"), UsersController, :new
-    post Regexp.new("^/users/create$"), UsersController, :create
-    get Regexp.new("^/users(?<id>\\d+)$"), UsersController, :show
+    get "/users/new", UsersController, :new
+    post "/users/create", UsersController, :create
+    get "/users/:id", UsersController, :show
 
-    get Regexp.new("^/statuses$"), StatusesController, :index
+    get "/statuses", StatusesController, :index
 
     # uncomment this when you get to route params
-    get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusesController, :show
+    # get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusesController, :show
+    get "/statuses/:id", StatusesController, :show
+    get "/statuses/:status_id/silliness/:id", StatusesController, :silly
   end
 
   route = router.run(req, res)
