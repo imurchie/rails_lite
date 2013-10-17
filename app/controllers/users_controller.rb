@@ -1,4 +1,4 @@
-class UsersController < ControllerBase
+class UsersController < RailsLite::ControllerBase
   def new
   end
 

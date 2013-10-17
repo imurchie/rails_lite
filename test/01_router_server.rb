@@ -16,7 +16,7 @@ server = WEBrick::HTTPServer.new :Port => 8080
 trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|
-  router = Router.new
+  router = RailsLite::Router.new
   router.draw do
     # resources :user, :only => [:new, :create, :show, :edit, :update]
     get "/users/new", UsersController, :new
