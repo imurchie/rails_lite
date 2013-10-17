@@ -87,6 +87,10 @@ class Router
     end
   end
 
+  def resources(name)
+
+  end
+
   def match(req)
 
   end

@@ -32,7 +32,7 @@ server.mount_proc '/' do |req, res|
     get "/statuses/:id", StatusesController, :show
     get "/statuses/:status_id/silliness/:id", StatusesController, :silly
 
-    # resources :users
+    resources :users
   end
 
   route = router.run(req, res)
