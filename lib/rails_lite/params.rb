@@ -6,7 +6,7 @@ class Params
 
     @params = route_params
 
-    @params.merge! parse_www_encoded_form(request.query_string.to_s + request.body.to_s)
+    @params.merge! Params.parse_www_encoded_form(request.query_string.to_s + request.body.to_s)
   end
 
   def [](key)
@@ -18,24 +18,26 @@ class Params
   end
 
 
+  def self.parse_www_encoded_form(form_string = "")
+    params = {}
+
+    URI.decode_www_form(form_string).each do |key, value|
+      populate_params(params, key, value)
+    end
+
+    params
+  end
+
   private
     attr_reader :request, :params
 
-    def parse_www_encoded_form(form_string = "")
-      params = {}
 
-      URI.decode_www_form(form_string).each do |key, value|
-        populate_params(params, key, value)
-      end
 
-      params
-    end
-
-    def parse_key(key)
+    def self.parse_key(key)
       key.split(/\]\[|\[|\]/)
     end
 
-    def populate_params(params, key, value)
+    def self.populate_params(params, key, value)
       keys = parse_key(key)
 
       next_level = params

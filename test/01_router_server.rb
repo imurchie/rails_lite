@@ -18,10 +18,12 @@ trap('INT') { server.shutdown }
 server.mount_proc '/' do |req, res|
   router = Router.new
   router.draw do
-    # resources :user, :only => [:new, :create, :show]
+    # resources :user, :only => [:new, :create, :show, :edit, :update]
     get "/users/new", UsersController, :new
     post "/users/create", UsersController, :create
     get "/users/:id", UsersController, :show
+    get "/users/:id/edit", UsersController, :edit
+    put "/users/:id", UsersController, :update
 
     get "/statuses", StatusesController, :index
 
@@ -29,6 +31,8 @@ server.mount_proc '/' do |req, res|
     # get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusesController, :show
     get "/statuses/:id", StatusesController, :show
     get "/statuses/:status_id/silliness/:id", StatusesController, :silly
+
+    # resources :users
   end
 
   route = router.run(req, res)

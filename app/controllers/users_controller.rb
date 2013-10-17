@@ -8,4 +8,11 @@ class UsersController < ControllerBase
 
   def show
   end
+
+  def edit
+  end
+
+  def update
+    render_content params.to_s, "text/text"
+  end
 end

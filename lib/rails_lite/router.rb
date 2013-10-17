@@ -1,3 +1,5 @@
+require_relative "params"
+
 class Route
   attr_reader :pattern, :http_method, :controller_class, :action_name, :route_params
 
@@ -11,7 +13,7 @@ class Route
   end
 
   def matches?(req)
-    request_method = req.request_method.downcase.to_sym
+    request_method = parse_request_method(req)
 
     if request_method == http_method && md = pattern.match(req.path)
 
@@ -30,6 +32,10 @@ class Route
     controller.invoke_action(action_name)
   end
 
+  def to_s
+    "Route: [#{http_method}] #{pattern.to_s} => #{controller_class}##{action_name}"
+  end
+
 
   private
     # parse Rails-style route parameters into the Regexp used here
@@ -45,6 +51,18 @@ class Route
       end.join("/")
 
       Regexp.new("^#{pattern}$")
+    end
+
+    def parse_request_method(request)
+      method = request.request_method.downcase
+
+      if method == "post"
+        # POST requests can be POST, PUT, or DELETE
+        _method = Params.parse_www_encoded_form(request.body)["_method"]
+        method = _method unless _method.nil?
+      end
+
+      method.to_sym
     end
 end
 

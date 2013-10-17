@@ -8,7 +8,6 @@ class ControllerBase
   def initialize(req, res, route_params={})
     @request      = req
     @response     = res
-    @route_params = route_params
 
     @params = Params.new(req, route_params)
 
