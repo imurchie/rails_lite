@@ -1,3 +1,4 @@
+require "active_support/core_ext"
 require_relative "params"
 
 class Route
@@ -67,6 +68,16 @@ class Route
 end
 
 class Router
+  ROUTE_METHODS = {
+    :new => :get,
+    :create => :post,
+    :edit => :get,
+    :update => :put,
+    :index => :get,
+    :show => :get,
+    :destroy => :delete
+  }
+
   attr_reader :routes
 
   def initialize
@@ -87,8 +98,16 @@ class Router
     end
   end
 
-  def resources(name)
+  def resources(name, options = {})
+    options = Router.default_resources_options.merge(options)
 
+    options[:only].each do |action_name|
+      # get "/users/new", UsersController, :new
+      self.send(Router::ROUTE_METHODS[action_name],
+        "/#{name}/#{action_name}",
+        "#{action_name.camelize}Controller".constantize,
+        action_name)
+    end
   end
 
   def match(req)
@@ -111,4 +130,10 @@ class Router
       res.status = 404
     end
   end
+
+
+  private
+    def self.default_resources_options
+      { :only => [:new, :create, :edit, :update, :index, :show, :destroy] }
+    end
 end
