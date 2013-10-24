@@ -16,14 +16,14 @@ server = WEBrick::HTTPServer.new :Port => 8080
 trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|
-  router = Router.new
+  router = RailsLite::Router.new
   router.draw do
     # resources :user, :only => [:new, :create, :show, :edit, :update]
-    get "/users/new", UsersController, :new
-    post "/users/create", UsersController, :create
-    get "/users/:id", UsersController, :show
-    get "/users/:id/edit", UsersController, :edit
-    put "/users/:id", UsersController, :update
+    # get "/users/new", UsersController, :new
+    # post "/users/create", UsersController, :create
+    # get "/users/:id", UsersController, :show
+    # get "/users/:id/edit", UsersController, :edit
+    # put "/users/:id", UsersController, :update
 
     get "/statuses", StatusesController, :index
 

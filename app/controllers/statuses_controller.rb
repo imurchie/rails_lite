@@ -1,4 +1,4 @@
-class StatusesController < ControllerBase
+class StatusesController < RailsLite::ControllerBase
   def index
     statuses = ["s1", "s2", "s3"]
 

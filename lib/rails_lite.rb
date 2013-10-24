@@ -1,2 +1,5 @@
-require_relative 'rails_lite/controller_base'
-require_relative 'rails_lite/router'
+require 'rails_lite/controller_base'
+require 'rails_lite/router'
+
+module RailsLite
+end
