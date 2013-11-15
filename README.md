@@ -1,6 +1,6 @@
 # RailsLite
 
-TODO: Write a gem description
+A streamlined version of the web application framework Rails. Allows for setting of routes and serving of dynamic content.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+For a basic demo of use, see [here](https://github.com/imurchie/rails_lite_demo_app).
 
 ## Contributing
 
