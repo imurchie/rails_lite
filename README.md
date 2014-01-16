@@ -27,3 +27,7 @@ For a basic demo of use, see [here](https://github.com/imurchie/rails_lite_demo_
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/imurchie/rails_lite/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
